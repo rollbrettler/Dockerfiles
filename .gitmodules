@@ -1,3 +1,6 @@
 [submodule "invoice-ninja/invoice-ninja"]
 	path = invoice-ninja/invoice-ninja
 	url = https://github.com/hillelcoren/invoice-ninja.git
+[submodule "openphoto/openphoto"]
+	path = openphoto/openphoto
+	url = https://github.com/photo/frontend.git
