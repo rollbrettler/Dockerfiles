@@ -1,0 +1,3 @@
+[submodule "invoice-ninja/invoice-ninja"]
+	path = invoice-ninja/invoice-ninja
+	url = https://github.com/hillelcoren/invoice-ninja.git
