@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => getenv('DATBASE_TYPE'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'db',
-			'database'  => 'ninja',
-			'username'  => 'ninja',
-			'password'  => 'ninja',
+			'host'      => getenv('DATBASE_HOST'),
+			'database'  => getenv('DATBASE_NAME'),
+			'username'  => getenv('DATBASE_USER'),
+			'password'  => getenv('DATBASE_PASSWORD'),
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -65,10 +65,10 @@ return array(
 	
 		'pgsql' => array(
 			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
+			'host'     => getenv('DATBASE_HOST'),
+			'database' => getenv('DATBASE_NAME'),
+			'username' => getenv('DATBASE_USER'),
+			'password' => getenv('DATBASE_PASSWORD'),
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
@@ -76,10 +76,10 @@ return array(
 
 		'sqlsrv' => array(
 			'driver'   => 'sqlsrv',
-			'host'     => 'localhost',
-			'database' => 'database',
-			'username' => 'root',
-			'password' => '',
+			'host'     => getenv('DATBASE_HOST'),
+			'database' => getenv('DATBASE_NAME'),
+			'username' => getenv('DATBASE_USER'),
+			'password' => getenv('DATBASE_PASSWORD'),
 			'prefix'   => '',
 		),
 

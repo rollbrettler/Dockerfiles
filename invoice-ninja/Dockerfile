@@ -1,11 +1,10 @@
-# invoice-ninja version 1.2.1
+# invoice-ninja
 FROM tutum/apache-php:latest
 
-MAINTAINER Tim Petter
+MAINTAINER Tim Petter <tim@timpetter.de>
 
 # ubdate first
 RUN apt-get update --assume-yes --quiet
-RUN apt-get upgrade --assume-yes --quiet
 
 # install some basic tools
 RUN apt-get install --assume-yes --quiet curl wget
@@ -29,9 +28,20 @@ RUN mkdir /var/www/invoice-ninja/
 ADD invoice-ninja /var/www/invoice-ninja
 RUN chown -R www-data:www-data /var/www/invoice-ninja
 
+# define some environment variables
+# database
+ENV DATBASE_TYPE mysql
+ENV DATBASE_HOST db
+ENV DATBASE_NAME ninja
+ENV DATBASE_USER ninja
+ENV DATBASE_PASSWORD ninja
+# application
+ENV APPLICATION_URL http://www.invoiceninja.com/
+
 # add files
 ADD docker-apache.conf /etc/apache2/sites-enabled/000-default.conf
 ADD database.php /var/www/invoice-ninja/app/config/database.php
+ADD app.php /var/www/invoice-ninja/app/config/app.php
 ADD run-invoice-ninja.sh /run-invoice-ninja.sh
 ADD database-setup.sql /var/database-setup.sql
 
