@@ -1,2 +1,13 @@
 .git
 tests
+.bowerrc
+.gitattributes
+.gitignore
+Gruntfile.js
+bower.json
+codeception.yml
+composer.json
+composer.lock
+package.json
+phpunit.xml
+node_modules
