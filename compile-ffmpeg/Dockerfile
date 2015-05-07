@@ -7,13 +7,13 @@ RUN apt-get install --assume-yes --quiet --force-yes wget yasm autoconf automake
     libfreetype6-dev libgpac-dev libsdl1.2-dev libtheora-dev libtool libva-dev libvdpau-dev libvorbis-dev \
     libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev libx264-dev libmp3lame-dev
 
-RUN mkdir /build/ffmpeg_sources
+RUN mkdir -p /build /ffmpeg_sources /ffmpeg_build
 
 ADD . /
 
-RUN chmod +x /build.sh
+RUN chmod +x /build-ffmpeg.sh
 
 VOLUME ["/build"]
 WORKDIR /build
 
-CMD ["/build.sh"]
+CMD ["/build-ffmpeg.sh"]
