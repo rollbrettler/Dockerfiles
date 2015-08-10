@@ -1,4 +1,0 @@
-CREATE SCHEMA `ninja` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER 'ninja'@'%' IDENTIFIED BY 'ninja';
-GRANT ALL PRIVILEGES ON `ninja`.* TO 'ninja'@'%';
-FLUSH PRIVILEGES;

@@ -1,49 +1,34 @@
 # invoice-ninja
-FROM tutum/apache-php:latest
+FROM php:5.6-apache
 
 MAINTAINER Tim Petter <tim@timpetter.de>
 
-# ubdate first
-RUN apt-get update --assume-yes --quiet
+ENV VERSION v2.3.0
 
-# install some basic tools
-RUN apt-get install --assume-yes --quiet curl wget
+ENV DB_TYPE mysql
+ENV DB_HOST localhost
+ENV DB_DATABASE forge
+ENV DATBASE_USER forge
+ENV DB_PASSWORD forge
+ENV APP_URL http://www.invoiceninja.com/
 
-# install apache
-RUN apt-get install --assume-yes --quiet apache2
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng12-dev \
+        git \
+    && docker-php-ext-install mbstring curl mcrypt \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd
 
-# install php
-RUN apt-get install --assume-yes --quiet php5 php5-curl php5-gd php5-imagick php-pear php5-imap php5-cli php5-cgi php5-mysql libapache2-mod-php5 php5-mcrypt
+WORKDIR /var/www/html
 
-# apt get cleanup
-RUN apt-get clean
-
-# configuration for invoice ninja
-RUN php5enmod mcrypt
-RUN a2enmod rewrite
-RUN rm -fr /app
-
-# add invoice ninja files
-RUN mkdir /var/www/invoice-ninja/
-ADD invoice-ninja /var/www/invoice-ninja
-RUN chown -R www-data:www-data /var/www/invoice-ninja
-
-# define some environment variables
-# database
-ENV DATBASE_TYPE mysql
-ENV DATBASE_HOST db
-ENV DATBASE_NAME ninja
-ENV DATBASE_USER ninja
-ENV DATBASE_PASSWORD ninja
-# application
-ENV APPLICATION_URL http://www.invoiceninja.com/
-
-# add files
-ADD docker-apache.conf /etc/apache2/sites-enabled/000-default.conf
-ADD database.php /var/www/invoice-ninja/app/config/database.php
-ADD app.php /var/www/invoice-ninja/app/config/app.php
-ADD run-invoice-ninja.sh /run-invoice-ninja.sh
-ADD database-setup.sql /var/database-setup.sql
+RUN git clone https://github.com/hillelcoren/invoice-ninja.git /var/www/html/ \
+    && git checkout $VERSION \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer install \
+    && cp bootstrap/environment.default.php bootstrap/environment.php
 
 EXPOSE 80
-CMD ["/run-invoice-ninja.sh"]
